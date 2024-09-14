@@ -6,7 +6,8 @@
     <title>Grahakly</title>
     <link rel="icon" href="favicon.png" type="image/x-icon" />
 
-    <script src="https://cdn.tailwindcss.com/3.4.5"></script>
+    <script src="tailwind.js"></script>
+
     <style>
       body {
         font-family: "p", serif;
@@ -215,60 +216,28 @@ const countdownInterval = setInterval(updateCountdown, 1000);
 updateCountdown();
 
 
-
-      function sendemail() {
-        let name = document.getElementById("name").value;
-        let email = document.getElementById("email").value;
-        let message = document.getElementById("message").value;
-
-        let body =
-          "Name: " +
-          name +
-          "<br/><br/> Email: " +
-          email +
-          "<br/><br/> Message from Grahakly : " +
-          message;
-
-        Email.send({
-          SecureToken: "7015160f-8822-4d9e-af8e-09c59f28a693",
-          To: "contactabhirahtech@gmail.com",
-          From: "contactabhirahtech@gmail.com",
-          Subject: "Send message form",
-          Body: body,
-        })
-          .then(function (response) {
-            if (response === "OK") {
-              showStatusMessage("success", "Sent successfully!");
-            } else {
-              showStatusMessage("error", "Failed to send message!");
-            }
-          })
-          .catch(function (error) {
-            showStatusMessage("error", "Failed to send message!");
-          });
-      }
-
-      function showStatusMessage(type, message) {
-        const statusMessage = document.getElementById("statusMessage");
-        const statusIcon = document.getElementById("statusIcon");
-        const statusText = document.getElementById("statusText");
-
-        statusMessage.classList.remove("hidden");
-        statusIcon.className = ""; 
-        statusText.textContent = message;
-
-        if (type === "success") {
-          statusMessage.style.color = "green";
-          statusMessage.style.textAlign="center";
-          statusMessage.style.fontSize="20px";
-          statusIcon.className = "fa fa-check";
+function sendemail(){
+   let name=document.getElementById("name").value ;
+   let email=document.getElementById("email").value ;
+   let message=document.getElementById("message").value ;
+  
+   let body="Name: " +name +"<br/> Email:"+ email+"<br/> <br/> Message:"+ message;
 
 
-        } else if (type === "error") {
-          statusMessage.style.color = "red";
-          statusIcon.className = "fa fa-times"; 
-        }
-      }
+    Email.send({
+      SecureToken :"7015160f-8822-4d9e-af8e-09c59f28a693",
+        To : "contactabhirahtech@gmail.com",
+        From : "contactabhirahtech@gmail.com",
+        Subject : "Send message form",
+        Body : body
+    }).then(
+      message => alert("sent successfully")
+    );
+}
+
+
+
+
     </script>
     <script src="https://smtpjs.com/v3/smtp.js"></script>
   </body>
