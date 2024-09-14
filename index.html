@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gra</title>
+    <title>Grahakly</title>
     <link rel="icon" href="favicon.png" type="image/x-icon" />
 
-    <script src="https://cdn.tailwindcss.com/3.4.5"></script>
+    <script src="tailwind.js"></script>
 
     <style>
       body {
-        font-family: "p", serif;
+        font-family:  "Adamina", serif;
       }
       h2 {
         background-color: #e26309;
@@ -29,6 +29,39 @@
       a{
         font-size: 20px;
       }
+      .status-alert {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: transparent;
+ 
+  padding: 10px;
+  margin: 10px;
+  width: 300px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: green;
+  font-family:  "Adamina", serif;
+}
+
+
+
+.status-alert.success {
+  border-color: green;
+  color: green;
+}
+
+.status-alert.error {
+  border-color: red;
+  color: red;
+}
+
+
+
     </style>
   </head>
 
@@ -102,7 +135,7 @@
         <div class="w-full md:w-1/3 bg-gray-800 p-6 rounded-lg">
           <h3 class="text-4xl font-semibold mb-4 text-center">Contact Us</h3>
           <p class="text-gray-400 mb-6 text-center text-2xl">
-            For Customer Support, send us a note.
+            For Any Queries, send us a note.
           </p>
 
           <!-- Add id to the form -->
@@ -239,7 +272,7 @@ updateCountdown();
         })
           .then(function (response) {
             if (response === "OK") {
-              showStatusMessage("success", "Sent successfully!");
+              showStatusMessage("success", "Sent successfully !");
             } else {
               showStatusMessage("error", "Failed to send message!");
             }
@@ -250,26 +283,20 @@ updateCountdown();
       }
 
       function showStatusMessage(type, message) {
-        const statusMessage = document.getElementById("statusMessage");
-        const statusIcon = document.getElementById("statusIcon");
-        const statusText = document.getElementById("statusText");
+  const alertDiv = document.createElement('div');
+  alertDiv.className = `status-alert ${type}`;
 
-        statusMessage.classList.remove("hidden");
-        statusIcon.className = ""; 
-        statusText.textContent = message;
+  const statusText = document.createElement('span');
+  statusText.textContent = message;
+  alertDiv.appendChild(statusText);
 
-        if (type === "success") {
-          statusMessage.style.color = "green";
-          statusMessage.style.textAlign="center";
-          statusMessage.style.fontSize="20px";
-          statusIcon.className = "fa fa-check";
+  document.body.insertBefore(alertDiv, document.body.firstChild);
 
+  setTimeout(() => {
+    alertDiv.remove();
+  }, 5000); // Alert disappears after 5 seconds
+}
 
-        } else if (type === "error") {
-          statusMessage.style.color = "red";
-          statusIcon.className = "fa fa-times"; 
-        }
-      }
     </script>
     <script src="https://smtpjs.com/v3/smtp.js"></script>
   </body>
