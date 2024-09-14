@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grahakly</title>
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
+
+    <script src="tailwind.js"></script>
+
+    <style>
+      body {
+        font-family: "Adamina", serif;
+      }
+      h2 {
+        background-color: #e26309;
+        padding: 0.5rem 1rem;
+        width: fit-content;
+        color: black;
+        border-radius: 10px;
+      }
+      .bg {
+        background-color: #e26309;
+        color: black;
+      }
+      .logo {
+        height: 50px;
+      }
+      a{
+        font-size: 20px;
+      }
+    </style>
+  </head>
+
+  <body
+    class="bg-gray-900 text-white flex flex-col items-center justify-between min-h-screen"
+  >
+    <div class="container max-w-7xl mx-auto p-6">
+      <header class="flex justify-between items-center">
+        <div class="text-4xl font-bold text-yellow-500">
+          <img class="logo" src="logo (2).png" />
+        </div>
+        <div class="flex space-x-4">
+          <a href="https://x.com/grahakly?t=ZMt7KRaqt7ry8knQ2ZB7CA&s=08" class="text-white hover:text-gray-400"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a href="#" class="text-white hover:text-gray-400"
+            ><i class="fab fa-facebook"></i
+          ></a>
+          <a href="https://www.instagram.com/grahakly?utm_source=qr&igsh=Z255aWc0cTJpZjh3" class="text-white hover:text-gray-400"
+            ><i class="fab fa-instagram"></i
+          ></a>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <div
+        class="flex flex-col md:flex-row justify-between items-start space-y-10 md:space-y-0"
+        style="padding-top: 5rem !important"
+      >
+        <!-- Left side (Countdown and Notification) -->
+        <div class="w-full md:w-1/2">
+          <h2 class="text-4xl font-bold mb-4">Coming Soon!</h2>
+          <div class="flex space-x-6 mb-6 text-white">
+            <div class="text-center">
+              <p id="days" class="text-4xl font-bold">0</p>
+              <span class="block text-gray-400">Day</span>
+            </div>
+            <div class="text-center">
+              <p id="hours" class="text-4xl font-bold">00</p>
+              <span class="block text-gray-400">Hrs</span>
+            </div>
+            <div class="text-center">
+              <p id="minutes" class="text-4xl font-bold">00</p>
+              <span class="block text-gray-400">Min</span>
+            </div>
+            <div class="text-center">
+              <p id="seconds" class="text-4xl font-bold">00</p>
+              <span class="block text-gray-400">Sec</span>
+            </div>
+          </div>
+          <p class="text-6xl mb-6">Our new website is on its way.</p>
+          <p class="text-2xl text-gray-400 mb-4">
+            Get notified when we launch.
+          </p>
+
+          <!-- Notify Me Form -->
+          <form class="flex">
+            <input
+              type="email"
+              placeholder="Enter Your Email Here..."
+              class="flex-grow px-4 py-3 rounded-l-lg bg-gray-800 text-white focus:outline-none"
+              required
+            />
+            <button type="submit" class="bg px-6 py-4 rounded-r-lg font-bold">
+              Notify Me
+            </button>
+          </form>
+        </div>
+
+        <div class="w-full md:w-1/3 bg-gray-800 p-6 rounded-lg">
+          <h3 class="text-4xl font-semibold mb-4 text-center">Contact Us</h3>
+          <p class="text-gray-400 mb-6 text-center text-2xl">
+            For Customer Support, send us a note.
+          </p>
+
+          <!-- Add id to the form -->
+          <form id="contactForm" onsubmit="sendemail(); reset(); return false">
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter Your Name"
+              class="w-full px-4 py-3 mb-4 bg-gray-700 text-white rounded-lg focus:outline-none"
+              required
+            />
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter Your Email"
+              class="w-full px-4 py-3 mb-4 bg-gray-700 text-white rounded-lg focus:outline-none"
+              required
+            />
+            <textarea
+              placeholder="Enter Your Query"
+              id="message"
+              class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg focus:outline-none mb-6"
+              required
+            ></textarea>
+            <button
+              type="submit"
+              class="w-full bg px-6 py-3 rounded-lg font-bold"
+            >
+              Send Message
+            </button>
+            <div id="statusMessage" class="mt-4 hidden">
+              <span id="statusIcon"></span>
+              <span id="statusText"></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full mt-auto mb-2">
+      <p class="text-center text-gray-500">
+        &copy; 2024 Grahakly . All Rights Reserved.
+      </p>
+    </footer>
+
+    <!-- FontAwesome CDN for icons -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Countdown Timer Script -->
+    <script>
+      
+      const getTargetDate = () => {
+        const savedDate = localStorage.getItem("targetDate");
+        if (savedDate) {
+          return new Date(savedDate);
+        } else {
+          const currentDate = new Date();
+          currentDate.setMonth(currentDate.getMonth() + 6); // Add 6 months
+          localStorage.setItem("targetDate", currentDate);
+          return currentDate;
+        }
+      };
+
+      const targetDate = getTargetDate();
+
+      // Update countdown
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const timeDifference = targetDate - now;
+
+        if (timeDifference > 0) {
+          const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const minutes = Math.floor(
+            (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+          document.getElementById("days").innerHTML = days;
+          document.getElementById("hours").innerHTML = hours;
+          document.getElementById("minutes").innerHTML = minutes;
+          document.getElementById("seconds").innerHTML = seconds;
+        } else {
+          document.getElementById("days").innerHTML = 0;
+          document.getElementById("hours").innerHTML = 0;
+          document.getElementById("minutes").innerHTML = 0;
+          document.getElementById("seconds").innerHTML = 0;
+        }
+      }
+
+      // Call updateCountdown every second
+      setInterval(updateCountdown, 1000);
+
+      function sendemail() {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let message = document.getElementById("message").value;
+
+        let body =
+          "Name: " +
+          name +
+          "<br/><br/> Email: " +
+          email +
+          "<br/><br/> Message from Grahakly : " +
+          message;
+
+        Email.send({
+          SecureToken: "7015160f-8822-4d9e-af8e-09c59f28a693",
+          To: "contactabhirahtech@gmail.com",
+          From: "contactabhirahtech@gmail.com",
+          Subject: "Send message form",
+          Body: body,
+        })
+          .then(function (response) {
+            if (response === "OK") {
+              showStatusMessage("success", "Sent successfully!");
+            } else {
+              showStatusMessage("error", "Failed to send message!");
+            }
+          })
+          .catch(function (error) {
+            showStatusMessage("error", "Failed to send message!");
+          });
+      }
+
+      function showStatusMessage(type, message) {
+        const statusMessage = document.getElementById("statusMessage");
+        const statusIcon = document.getElementById("statusIcon");
+        const statusText = document.getElementById("statusText");
+
+        statusMessage.classList.remove("hidden");
+        statusIcon.className = ""; 
+        statusText.textContent = message;
+
+        if (type === "success") {
+          statusMessage.style.color = "green";
+          statusMessage.style.textAlign="center";
+          statusMessage.style.fontSize="20px";
+          statusIcon.className = "fa fa-check";
+
+
+        } else if (type === "error") {
+          statusMessage.style.color = "red";
+          statusIcon.className = "fa fa-times"; 
+        }
+      }
+    </script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+  </body>
+</html>
