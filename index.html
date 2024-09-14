@@ -6,11 +6,10 @@
     <title>Grahakly</title>
     <link rel="icon" href="favicon.png" type="image/x-icon" />
 
-    <script src="tailwind.js"></script>
-
+    <script src="https://cdn.tailwindcss.com/3.4.5"></script>
     <style>
       body {
-        font-family: "Adamina", serif;
+        font-family: "p", serif;
       }
       h2 {
         background-color: #e26309;
@@ -85,11 +84,12 @@
           </p>
 
           <!-- Notify Me Form -->
-          <form class="flex">
+          <form class="flex" onsubmit="sendemail(); reset(); return false">
             <input
               type="email"
               placeholder="Enter Your Email Here..."
               class="flex-grow px-4 py-3 rounded-l-lg bg-gray-800 text-white focus:outline-none"
+              id="email"
               required
             />
             <button type="submit" class="bg px-6 py-4 rounded-r-lg font-bold">
@@ -156,50 +156,65 @@
 
     <!-- Countdown Timer Script -->
     <script>
-      
-      const getTargetDate = () => {
-        const savedDate = localStorage.getItem("targetDate");
-        if (savedDate) {
-          return new Date(savedDate);
-        } else {
-          const currentDate = new Date();
-          currentDate.setMonth(currentDate.getMonth() + 6); // Add 6 months
-          localStorage.setItem("targetDate", currentDate);
-          return currentDate;
-        }
-      };
+      // Get references to the countdown elements
+const daysEl = document.getElementById('days');
+const hoursEl = document.getElementById('hours');
+const minutesEl = document.getElementById('minutes');
+const secondsEl = document.getElementById('seconds');
 
-      const targetDate = getTargetDate();
+// Function to add months to a date
+function addMonths(date, months) {
+  const result = new Date(date);
+  result.setMonth(result.getMonth() + months);
+  return result;
+}
 
-      // Update countdown
-      function updateCountdown() {
-        const now = new Date().getTime();
-        const timeDifference = targetDate - now;
+// Check if there's already an end date stored in localStorage
+let endDate = localStorage.getItem('countdownEndDate');
 
-        if (timeDifference > 0) {
-          const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-          const hours = Math.floor(
-            (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-          );
-          const minutes = Math.floor(
-            (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
-          );
-          const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+if (!endDate) {
+  // If no end date is stored, set the end date 6 months from now and store it
+  endDate = addMonths(new Date(), 6);
+  localStorage.setItem('countdownEndDate', endDate);
+} else {
+  // Convert stored date string back to a Date object
+  endDate = new Date(endDate);
+}
 
-          document.getElementById("days").innerHTML = days;
-          document.getElementById("hours").innerHTML = hours;
-          document.getElementById("minutes").innerHTML = minutes;
-          document.getElementById("seconds").innerHTML = seconds;
-        } else {
-          document.getElementById("days").innerHTML = 0;
-          document.getElementById("hours").innerHTML = 0;
-          document.getElementById("minutes").innerHTML = 0;
-          document.getElementById("seconds").innerHTML = 0;
-        }
-      }
+// Update the countdown every second
+function updateCountdown() {
+  const now = new Date();
+  const timeLeft = endDate - now;
 
-      // Call updateCountdown every second
-      setInterval(updateCountdown, 1000);
+  // Calculate time components
+  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+  // Update the DOM
+  daysEl.textContent = days;
+  hoursEl.textContent = hours < 10 ? '0' + hours : hours;
+  minutesEl.textContent = minutes < 10 ? '0' + minutes : minutes;
+  secondsEl.textContent = seconds < 10 ? '0' + seconds : seconds;
+
+  // Check if the countdown has finished
+  if (timeLeft <= 0) {
+    clearInterval(countdownInterval);
+    daysEl.textContent = '0';
+    hoursEl.textContent = '00';
+    minutesEl.textContent = '00';
+    secondsEl.textContent = '00';
+  }
+}
+
+// Run updateCountdown every second
+const countdownInterval = setInterval(updateCountdown, 1000);
+
+// Run it once immediately to avoid a delay
+updateCountdown();
+
+
 
       function sendemail() {
         let name = document.getElementById("name").value;
