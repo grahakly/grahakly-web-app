@@ -190,36 +190,33 @@
 
     <!-- Countdown Timer Script -->
     <script>
-      const enDate = "28 FEB 2025 11:39 PM"
-      const days =document.getElementById("days")
-      const hour =document.getElementById("hours")
-      const min =document.getElementById("minutes")
-      const sec =document.getElementById("seconds")
-      
-      function clock(){
-        const end = new Date(enDate)
-        const now =new Date()
-        const diff = (end - now)/1000;
-         
-        if (diff<0) return;
+      // Set the countdown target date in Indian Standard Time (IST) and convert it to UTC
+    const targetDateIST = new Date("28 Feb 2025 11:59 PM GMT+0530").getTime(); // IST time in milliseconds
 
-        days.textContent=Math.floor(diff /3600/24);
+function updateCountdown() {
+  // Get current time in UTC
+  const now = new Date().getTime();
 
-        hour.textContent=Math.floor(diff /3600)%24;
+  // Calculate the difference in seconds
+  const diff = (targetDateIST - now) / 1000;
 
-        min.textContent=Math.floor(diff /60)%60;
+  if (diff < 0) return;
 
-        sec.textContent=Math.floor(diff) %60;
-      
-      }
-      clock();
+  // Calculate time left
+  const days = Math.floor(diff / 3600 / 24);
+  const hours = Math.floor((diff / 3600) % 24);
+  const minutes = Math.floor((diff / 60) % 60);
+  const seconds = Math.floor(diff % 60);
 
-  setInterval( 
-    ()=>{
-      clock();
-    },
-    1000
-  )
+  // Update the DOM with real-time values
+  document.getElementById("days").textContent = days;
+  document.getElementById("hours").textContent = hours;
+  document.getElementById("minutes").textContent = minutes;
+  document.getElementById("seconds").textContent = seconds;
+}
+
+// Run the countdown function every second
+setInterval(updateCountdown, 1000);
 
       function sendemail() {
         let name = document.getElementById("name").value;
