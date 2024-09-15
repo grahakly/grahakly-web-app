@@ -190,35 +190,40 @@
 
     <!-- Countdown Timer Script -->
     <script>
-      const countdownDate = new Date();
-        countdownDate.setDate(countdownDate.getDate() + 167);
+      // Set the target date 167 days from now
+const targetDate = new Date();
+targetDate.setDate(targetDate.getDate() + 167);
 
-  // Update the countdown every 1 second
-  const interval = setInterval(function() {
-    const now = new Date().getTime();
-    const distance = countdownDate - now;
+// Function to update the countdown timer
+function updateTimer() {
+  const now = new Date().getTime(); // Get the current time in milliseconds
+  const timeLeft = targetDate.getTime() - now; // Calculate the time left
 
-    // Time calculations for days, hours, minutes, and seconds
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  // Calculate days, hours, minutes, and seconds left
+  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-    // Display the result in the corresponding elements
-    document.getElementById("days").innerHTML = days;
-    document.getElementById("hours").innerHTML = hours;
-    document.getElementById("minutes").innerHTML = minutes;
-    document.getElementById("seconds").innerHTML = seconds;
+  // Display the results
+  document.getElementById("days").textContent = days;
+  document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+  document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+  document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
 
-    // If the countdown is finished, display a message
-    if (distance < 0) {
-      clearInterval(interval);
-      document.getElementById("days").innerHTML = "0";
-      document.getElementById("hours").innerHTML = "00";
-      document.getElementById("minutes").innerHTML = "00";
-      document.getElementById("seconds").innerHTML = "00";
-    }
-  }, 1000);
+  // Check if the countdown is over
+  if (timeLeft < 0) {
+    clearInterval(timerInterval);
+    document.getElementById("days").textContent = 0;
+    document.getElementById("hours").textContent = '00';
+    document.getElementById("minutes").textContent = '00';
+    document.getElementById("seconds").textContent = '00';
+  }
+}
+
+// Update the countdown every 1 second
+const timerInterval = setInterval(updateTimer, 1000);
+
 
 
 
