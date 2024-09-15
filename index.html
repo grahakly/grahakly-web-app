@@ -190,42 +190,36 @@
 
     <!-- Countdown Timer Script -->
     <script>
-      // Set the target date 167 days from now
-const targetDate = new Date();
-targetDate.setDate(targetDate.getDate() + 167);
+      const enDate = "28 FEB 2025 11:39 PM"
+      const days =document.getElementById("days")
+      const hour =document.getElementById("hours")
+      const min =document.getElementById("minutes")
+      const sec =document.getElementById("seconds")
+      
+      function clock(){
+        const end = new Date(enDate)
+        const now =new Date()
+        const diff = (end - now)/1000;
+         
+        if (diff<0) return;
 
-// Function to update the countdown timer
-function updateTimer() {
-  const now = new Date().getTime(); // Get the current time in milliseconds
-  const timeLeft = targetDate.getTime() - now; // Calculate the time left
+        days.textContent=Math.floor(diff /3600/24);
 
-  // Calculate days, hours, minutes, and seconds left
-  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        hour.textContent=Math.floor(diff /3600)%24;
 
-  // Display the results
-  document.getElementById("days").textContent = days;
-  document.getElementById("hours").textContent = String(hours).padStart(2, '0');
-  document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
-  document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+        min.textContent=Math.floor(diff /60)%60;
 
-  // Check if the countdown is over
-  if (timeLeft < 0) {
-    clearInterval(timerInterval);
-    document.getElementById("days").textContent = 0;
-    document.getElementById("hours").textContent = '00';
-    document.getElementById("minutes").textContent = '00';
-    document.getElementById("seconds").textContent = '00';
-  }
-}
+        sec.textContent=Math.floor(diff) %60;
+      
+      }
+      clock();
 
-// Update the countdown every 1 second
-const timerInterval = setInterval(updateTimer, 1000);
-
-
-
+  setInterval( 
+    ()=>{
+      clock();
+    },
+    1000
+  )
 
       function sendemail() {
         let name = document.getElementById("name").value;
@@ -271,7 +265,7 @@ const timerInterval = setInterval(updateTimer, 1000);
 
   setTimeout(() => {
     alertDiv.remove();
-  }, 5000); // Alert disappears after 5 seconds
+  }, 5000);
 }
 
     </script>
