@@ -3,6 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Your One-Stop Solution in One App" />
+    <meta
+      name="keywords"
+      content="home maintenance, grocery service, household repairs, home services, grocery delivery, handyman, cleaning services, plumbing, electrical work, carpentry, lawn care, home improvement"
+    />
+    <meta name="author" content="grahakly" />
+    <meta name="robots" content="index, follow" />
+
     <title>Grahakly</title>
     <link rel="icon" href="favicon.png" type="image/x-icon" />
 
@@ -10,7 +19,7 @@
 
     <style>
       body {
-        font-family:  "Adamina", serif;
+        font-family: "Adamina", serif;
       }
       h2 {
         background-color: #e26309;
@@ -26,42 +35,37 @@
       .logo {
         height: 50px;
       }
-      a{
+      a {
         font-size: 20px;
       }
       .status-alert {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: transparent;
- 
-  padding: 10px;
-  margin: 10px;
-  width: 300px;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px;
-  color: #3b736e;
-  font-family:  "Adamina", serif;
-}
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: transparent;
 
+        padding: 10px;
+        margin: 10px;
+        width: 300px;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        color: #3b736e;
+        font-family: "Adamina", serif;
+      }
 
+      .status-alert.success {
+        border-color: #3b736e;
+        color: #3b736e;
+      }
 
-.status-alert.success {
-  border-color: #3b736e;;
-  color: #3b736e;;
-}
-
-.status-alert.error {
-  border-color: red;
-  color: red;
-}
-
-
-
+      .status-alert.error {
+        border-color: red;
+        color: red;
+      }
     </style>
   </head>
 
@@ -74,13 +78,17 @@
           <img class="logo" src="logo (2).png" />
         </div>
         <div class="flex space-x-4">
-          <a href="https://x.com/grahakly?t=ZMt7KRaqt7ry8knQ2ZB7CA&s=08" class="text-white hover:text-[#e26309]"
+          <a
+            href="https://x.com/grahakly?t=ZMt7KRaqt7ry8knQ2ZB7CA&s=08"
+            class="text-white hover:text-[#e26309]"
             ><i class="fab fa-twitter"></i
           ></a>
           <a href="#" class="text-white hover:text-[#e26309]"
             ><i class="fab fa-facebook"></i
           ></a>
-          <a href="https://www.instagram.com/grahakly?utm_source=qr&igsh=Z255aWc0cTJpZjh3" class="text-white hover:text-[#e26309]"
+          <a
+            href="https://www.instagram.com/grahakly?utm_source=qr&igsh=Z255aWc0cTJpZjh3"
+            class="text-white hover:text-[#e26309]"
             ><i class="fab fa-instagram"></i
           ></a>
         </div>
@@ -118,7 +126,7 @@
           </p>
 
           <!-- Notify Me Form -->
-          <form class="flex" onsubmit="sendemail(); reset(); return false">
+          <form class="flex" onsubmit="sendemail2(); reset(); return false">
             <input
               type="email"
               placeholder="Enter Your Email Here..."
@@ -149,11 +157,12 @@
             />
             <input
               type="email"
-              id="email"
+              id="emails"
               placeholder="Enter Your Email"
               class="w-full px-4 py-3 mb-4 bg-gray-700 text-white rounded-lg focus:outline-none"
               required
             />
+
             <textarea
               placeholder="Enter Your Query"
               id="message"
@@ -192,48 +201,82 @@
     <script>
       const targetDateUTC = new Date("2025-02-28T18:29:00Z").getTime(); // IST is UTC+5:30
 
-function updateCountdown() {
-  const nowUTC = new Date().getTime(); // Current time in UTC
-  const timeDiff = targetDateUTC - nowUTC; // Difference between target and current time in milliseconds
+      function updateCountdown() {
+        const nowUTC = new Date().getTime(); // Current time in UTC
+        const timeDiff = targetDateUTC - nowUTC; // Difference between target and current time in milliseconds
 
-  // If the time difference is negative, stop the countdown
-  if (timeDiff < 0) {
-    document.getElementById("days").textContent = "0";
-    document.getElementById("hours").textContent = "00";
-    document.getElementById("minutes").textContent = "00";
-    document.getElementById("seconds").textContent = "00";
-    return;
-  }
+        // If the time difference is negative, stop the countdown
+        if (timeDiff < 0) {
+          document.getElementById("days").textContent = "0";
+          document.getElementById("hours").textContent = "00";
+          document.getElementById("minutes").textContent = "00";
+          document.getElementById("seconds").textContent = "00";
+          return;
+        }
 
-  // Convert timeDiff into days, hours, minutes, and seconds
-  const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+        // Convert timeDiff into days, hours, minutes, and seconds
+        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-  // Update the HTML elements with the calculated values
-  document.getElementById("days").textContent = days;
-  document.getElementById("hours").textContent = ("0" + hours).slice(-2); // Pad single digit with zero
-  document.getElementById("minutes").textContent = ("0" + minutes).slice(-2);
-  document.getElementById("seconds").textContent = ("0" + seconds).slice(-2);
-}
+        // Update the HTML elements with the calculated values
+        document.getElementById("days").textContent = days;
+        document.getElementById("hours").textContent = ("0" + hours).slice(-2); // Pad single digit with zero
+        document.getElementById("minutes").textContent = ("0" + minutes).slice(
+          -2
+        );
+        document.getElementById("seconds").textContent = ("0" + seconds).slice(
+          -2
+        );
+      }
 
-// Update the countdown every 1 second
-setInterval(updateCountdown, 1000);
+      // Update the countdown every 1 second
+      setInterval(updateCountdown, 1000);
 
       function sendemail() {
         let name = document.getElementById("name").value;
-        let email = document.getElementById("email").value;
-        let message = document.getElementById("message").value;
+        let email = document.getElementById("emails").value;
+        let message = document.getElementById("message").value; 
+        if (!email) {
+          showStatusMessage("error", "Email is required!");
+          return;
+        }
 
         let body =
           "Name: " +
           name +
           "<br/><br/> Email: " +
           email +
-          "<br/><br/> Message from Grahakly : " +
+          "<br/><br/> Message from Grahakly: " +
           message;
 
+        Email.send({
+          SecureToken: "7015160f-8822-4d9e-af8e-09c59f28a693",
+          To: "contactabhirahtech@gmail.com",
+          From: "contactabhirahtech@gmail.com",
+          Subject: "Send message form",
+          Body: body,
+        })
+          .then(function (response) {
+            if (response === "OK") {
+              showStatusMessage("success", "Sent successfully!");
+            } else {
+              showStatusMessage("error", "Failed to send message!");
+            }
+          })
+          .catch(function (error) {
+            console.error("Error sending email:", error);
+            showStatusMessage("error", "Failed to send message!");
+          });
+      }
+
+      function sendemail2() {
+        let email = document.getElementById("email").value;
+
+        let body = "<br/><br/> Email: " + email;
         Email.send({
           SecureToken: "7015160f-8822-4d9e-af8e-09c59f28a693",
           To: "contactabhirahtech@gmail.com",
@@ -254,20 +297,19 @@ setInterval(updateCountdown, 1000);
       }
 
       function showStatusMessage(type, message) {
-  const alertDiv = document.createElement('div');
-  alertDiv.className = `status-alert ${type}`;
+        const alertDiv = document.createElement("div");
+        alertDiv.className = `status-alert ${type}`;
 
-  const statusText = document.createElement('span');
-  statusText.textContent = message;
-  alertDiv.appendChild(statusText);
+        const statusText = document.createElement("span");
+        statusText.textContent = message;
+        alertDiv.appendChild(statusText);
 
-  document.body.insertBefore(alertDiv, document.body.firstChild);
+        document.body.insertBefore(alertDiv, document.body.firstChild);
 
-  setTimeout(() => {
-    alertDiv.remove();
-  }, 5000);
-}
-
+        setTimeout(() => {
+          alertDiv.remove();
+        }, 5000);
+      }
     </script>
     <script src="https://smtpjs.com/v3/smtp.js"></script>
   </body>
