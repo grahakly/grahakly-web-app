@@ -190,63 +190,35 @@
 
     <!-- Countdown Timer Script -->
     <script>
-      // Get references to the countdown elements
-const daysEl = document.getElementById('days');
-const hoursEl = document.getElementById('hours');
-const minutesEl = document.getElementById('minutes');
-const secondsEl = document.getElementById('seconds');
+      const countdownDate = new Date();
+        countdownDate.setDate(countdownDate.getDate() + 167);
 
-// Function to add months to a date
-function addMonths(date, months) {
-  const result = new Date(date);
-  result.setMonth(result.getMonth() + months);
-  return result;
-}
+  // Update the countdown every 1 second
+  const interval = setInterval(function() {
+    const now = new Date().getTime();
+    const distance = countdownDate - now;
 
-// Check if there's already an end date stored in localStorage
-let endDate = localStorage.getItem('countdownEndDate');
+    // Time calculations for days, hours, minutes, and seconds
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-if (!endDate) {
-  // If no end date is stored, set the end date 6 months from now and store it
-  endDate = addMonths(new Date(), 6);
-  localStorage.setItem('countdownEndDate', endDate);
-} else {
-  // Convert stored date string back to a Date object
-  endDate = new Date(endDate);
-}
+    // Display the result in the corresponding elements
+    document.getElementById("days").innerHTML = days;
+    document.getElementById("hours").innerHTML = hours;
+    document.getElementById("minutes").innerHTML = minutes;
+    document.getElementById("seconds").innerHTML = seconds;
 
-// Update the countdown every second
-function updateCountdown() {
-  const now = new Date();
-  const timeLeft = endDate - now;
-
-  // Calculate time components
-  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-  // Update the DOM
-  daysEl.textContent = days;
-  hoursEl.textContent = hours < 10 ? '0' + hours : hours;
-  minutesEl.textContent = minutes < 10 ? '0' + minutes : minutes;
-  secondsEl.textContent = seconds < 10 ? '0' + seconds : seconds;
-
-  // Check if the countdown has finished
-  if (timeLeft <= 0) {
-    clearInterval(countdownInterval);
-    daysEl.textContent = '0';
-    hoursEl.textContent = '00';
-    minutesEl.textContent = '00';
-    secondsEl.textContent = '00';
-  }
-}
-
-// Run updateCountdown every second
-const countdownInterval = setInterval(updateCountdown, 1000);
-
-// Run it once immediately to avoid a delay
-updateCountdown();
+    // If the countdown is finished, display a message
+    if (distance < 0) {
+      clearInterval(interval);
+      document.getElementById("days").innerHTML = "0";
+      document.getElementById("hours").innerHTML = "00";
+      document.getElementById("minutes").innerHTML = "00";
+      document.getElementById("seconds").innerHTML = "00";
+    }
+  }, 1000);
 
 
 
