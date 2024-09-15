@@ -190,32 +190,35 @@
 
     <!-- Countdown Timer Script -->
     <script>
-      // Set the countdown target date in Indian Standard Time (IST) and convert it to UTC
-    const targetDateIST = new Date("28 Feb 2025 11:59 PM GMT+0530").getTime(); // IST time in milliseconds
+      const targetDateUTC = new Date("2025-02-28T18:29:00Z").getTime(); // IST is UTC+5:30
 
 function updateCountdown() {
-  // Get current time in UTC
-  const now = new Date().getTime();
+  const nowUTC = new Date().getTime(); // Current time in UTC
+  const timeDiff = targetDateUTC - nowUTC; // Difference between target and current time in milliseconds
 
-  // Calculate the difference in seconds
-  const diff = (targetDateIST - now) / 1000;
+  // If the time difference is negative, stop the countdown
+  if (timeDiff < 0) {
+    document.getElementById("days").textContent = "0";
+    document.getElementById("hours").textContent = "00";
+    document.getElementById("minutes").textContent = "00";
+    document.getElementById("seconds").textContent = "00";
+    return;
+  }
 
-  if (diff < 0) return;
+  // Convert timeDiff into days, hours, minutes, and seconds
+  const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-  // Calculate time left
-  const days = Math.floor(diff / 3600 / 24);
-  const hours = Math.floor((diff / 3600) % 24);
-  const minutes = Math.floor((diff / 60) % 60);
-  const seconds = Math.floor(diff % 60);
-
-  // Update the DOM with real-time values
+  // Update the HTML elements with the calculated values
   document.getElementById("days").textContent = days;
-  document.getElementById("hours").textContent = hours;
-  document.getElementById("minutes").textContent = minutes;
-  document.getElementById("seconds").textContent = seconds;
+  document.getElementById("hours").textContent = ("0" + hours).slice(-2); // Pad single digit with zero
+  document.getElementById("minutes").textContent = ("0" + minutes).slice(-2);
+  document.getElementById("seconds").textContent = ("0" + seconds).slice(-2);
 }
 
-// Run the countdown function every second
+// Update the countdown every 1 second
 setInterval(updateCountdown, 1000);
 
       function sendemail() {
